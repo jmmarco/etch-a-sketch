@@ -7,7 +7,8 @@ export function populateGrid(gridSize, gridContainer, borderOffset = 4) {
     return;
 
   const { width, height } = gridContainer.style;
-  const side = 600 / gridSize;
+
+  const side = parseInt(width || height) / gridSize;
 
   for (let i = 0; i < gridSize ** 2; i++) {
     const cell = document.createElement("div");
