@@ -14,7 +14,7 @@ export function populateGrid(gridSize, gridContainer, borderOffset = 4) {
     const cell = document.createElement("div");
     cell.style.width = `${side}px`;
     cell.style.height = `${side}px`;
-    cell.style.border = `1px solid deepskyblue`;
+    cell.style.border = `0.025rem solid lightgray`;
     cell.classList.add("cell");
     trace(cell);
     gridContainer.appendChild(cell);
@@ -33,8 +33,17 @@ export function generateGrid(value) {
   return grid;
 }
 
-export function generateStepper(min, max, stepperName = "gridSize") {
-  if (typeof min !== "number" && typeof max !== "number") return;
+export function generateStepper(
+  min,
+  max,
+  defaultValue = 47,
+  stepperName = "gridSize"
+) {
+  if (
+    (typeof min !== "number" && typeof max !== "number",
+    typeof defaultValue !== "number")
+  )
+    return;
   const stepperContainer = document.createElement("div");
   const input = document.createElement("input");
   const label = document.createElement("label");
@@ -44,12 +53,14 @@ export function generateStepper(min, max, stepperName = "gridSize") {
   input.type = "range";
   input.min = `${min}`;
   input.max = `${max}`;
+  input.value = defaultValue;
   label.for = stepperName;
-  label.textContent = "Grid size:"
-  span.id = "gridSizeValue"
+  label.textContent = "Grid size: ";
+  span.id = "gridSizeValue";
+  span.textContent = `${defaultValue} x ${defaultValue}`
   label.appendChild(span);
-  stepperContainer.appendChild(input)
-  stepperContainer.appendChild(label)
+  stepperContainer.appendChild(input);
+  stepperContainer.appendChild(label);
   return stepperContainer;
 }
 
@@ -62,9 +73,4 @@ function trace(element, className = "active") {
   element.addEventListener("mouseenter", (e) => {
     element.classList.add(className);
   });
-}
-
-export function handleStepChange(e) {
-  console.log(e.target.value)
-
 }
